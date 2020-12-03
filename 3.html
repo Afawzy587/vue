@@ -1,0 +1,42 @@
+<html>
+    <div id='app'>
+      <button-counter :count.sync='change_time'>Ahmed 
+          <span slot="header">mohamesfd</span>
+      </button-counter>
+    </div>
+    <script type="text/javascript" src="https://unpkg.com/vue"></script>
+    <script>
+        Vue.component('button-counter',{
+            template:'<div><button @click="decreament()">-</button>\n<span>{{counter}}</span> \n <button @click="increament()">+</button><slot></slot>'+'<slot name="header"></slot></div>',
+            data:function(){
+                return{
+                    counter:this.count,
+                }
+            },
+            props:{
+                count:{
+                    defult:0
+                },
+            },
+            methods: {
+                increament:function(){
+                     this.counter++;
+                     this.$emit('update:count',this.counter);
+                },
+                decreament:function(){
+                     this.counter--;
+                     this.$emit('update:count',this.counter);
+                }
+            },
+           
+        })
+
+       var vm = new Vue({
+            'el':'#app',
+            'data':{
+                change_time:0,
+            }
+            
+        })
+    </script>
+</html>

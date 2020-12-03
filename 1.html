@@ -1,0 +1,71 @@
+<html>
+    <div id='app'>
+        <ul>
+            <input v-model='newmessage' placeholder="name" >
+            <input v-model='newage' placeholder="age"  >
+            <button @click='AddMessage()'> Add </button>
+            <li v-for='(m,i) in messages'>
+                Name: {{m.name}}  ||  Age: {{m.age}}
+                <br>
+                <button @click='DelMessage(i)'> Del </button>
+            </li>
+        </ul>
+        <product v-for='(m,i) in messages' :name="m.name" :price='m.age'  ></product>
+    </div>
+    <script type="text/javascript" src="https://unpkg.com/vue"></script>
+    <script>
+        Vue.component('product',{
+            template:'<div><h1>{{name}}</h1><h2>{{price}}</h2></div>',
+            props:{
+                name:{required: true},
+                price:[Number,String],
+            }
+        })
+        var Message_storage = {
+            fetch: function(){
+                var mes = JSON.parse( localStorage.getItem('messages') || '[]');
+                // console.log(mes);
+
+                return mes;
+                },
+            save: function(messages){
+                console.log(messages);
+                localStorage.setItem('messages', JSON.stringify(messages) );
+            }
+        }
+       var vm = new Vue({
+            'el':'#app',
+            'data':
+            {
+                'newmessage':null,
+                'newage':null,
+                 messages:Message_storage.fetch()
+            }
+            ,
+            'methods':{
+                'DelMessage': function(index){
+                    this.messages.splice(index,1);
+                },
+                'AddMessage':function(){
+                    if(this.newmessage == "" || this.newage == "")
+                    return;
+
+                    this.messages.push({
+                        name:this.newmessage,
+                        age:this.newage
+                    });
+                    this.newmessage = '';
+                    this.newage = '';
+                }
+            },
+            watch: {
+                messages:{
+                    handler:function(messages){
+                        Message_storage.save(messages);
+                    },
+                    deep:true
+                }
+            }
+        })
+    </script>
+</html>

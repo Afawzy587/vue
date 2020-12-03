@@ -1,0 +1,45 @@
+<html>
+    <div id='app'>
+      <button-counter v-on:change_count='chacount' :count='0'></button-counter>
+    </div>
+    <script type="text/javascript" src="https://unpkg.com/vue"></script>
+    <script>
+        Vue.component('button-counter',{
+            template:'<div><button @click="decreament()">-</button><span>{{counter}}</span><button @click="increament()">+</button></div>',
+            data:function(){
+                return{
+                    counter:this.count,
+                }
+            },
+            props:{
+                count:{
+                    defult:0
+                },
+            },
+            methods: {
+                increament:function(){
+                     this.counter++;
+                     this.$emit('change_count',this.counter);
+                },
+                decreament:function(){
+                     this.counter--;
+                     this.$emit('change_count',this.counter);
+                }
+            },
+           
+        })
+
+       var vm = new Vue({
+            'el':'#app',
+            'data':{
+                change_time:0,
+            },
+            methods:{
+                chacount:function(newvalue){
+                    this.change_time = newvalue;
+                }
+            }
+            
+        })
+    </script>
+</html>

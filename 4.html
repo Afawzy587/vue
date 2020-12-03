@@ -1,0 +1,59 @@
+<html>
+    <div id='app'>
+        <button @click='tag = "img_tag"'>img_tag</button>
+        <button @click='tag = "prag"'>prag</button>
+        <keep-alive>
+             <component :is='tag'></component>
+        </keep-alive>
+        <input type="text" v-model="input_name" @change="inputkpp" />
+    </div>
+    <script type="text/javascript" src="https://unpkg.com/vue"></script>
+    <script>
+        Vue.component('img_tag',{
+            template:`<p>The following image works as a link:<br>
+                        <a href="https://www.qries.com/">
+                            <img alt="Qries" src="https://www.qries.com/images/banner_logo.png" width="150" height="70">
+                        </a>
+                        <button @click="counter ++ " >{{counter}}</button>
+                        </p>`,
+            data:function(){
+                return{
+                    counter:0,
+                }
+            },
+        })
+        Vue.component('prag',{
+            template:`<div> 
+                        <p>
+                        This paragraph
+                        contains a lot of lines
+                        in the source code,
+                        but the browser
+                        ignores it.
+                        </p>
+
+                        <p>
+                        This paragraph
+                        contains         a lot of spaces
+                        in the source         code,
+                        but the        browser
+                        ignores it.
+                        </p>
+                        </div>`
+        })
+
+       var vm = new Vue({
+            'el':'#app',
+            'data':{
+                tag:'img_tag',
+                input_name:''
+            },
+            methods: {
+                inputkpp:function(){
+                    console.log('inputkppinputkpp');
+                }
+            },
+            
+        })
+    </script>
+</html>
